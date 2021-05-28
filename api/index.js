@@ -74,4 +74,3 @@ bot.on('message', (msg) => {
 	
 
 	module.exports = r;
-
