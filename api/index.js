@@ -1,51 +1,50 @@
 var express = require('express');
-	var r = express.Router();
+var r = express.Router();
 	
 
-	// load pre-trained model
-	const model = require('./sdk/model.js');
+// load pre-trained model
+const model = require('./sdk/model.js');
 	
 
-	// Bot Setting
-	const TelegramBot = require('node-telegram-bot-api');
-	const token = '1877582683:AAHbKRwmSJg8EfLX_xPpRhDQe48HBm_2-48'
-	const bot = new TelegramBot(token, {polling: true});
-	
+// Bot Setting
+const TelegramBot = require('node-telegram-bot-api');
+const token = '1877582683:AAHbKRwmSJg8EfLX_xPpRhDQe48HBm_2-48'
+const bot = new TelegramBot(token, {polling: true});
 
 	
 
-	// bots
-	bot.onText(/\/start/, (msg) => { 
-	    console.log(msg)
-	    bot.sendMessage(
-	        msg.chat.id,
-	        'hello ${msg.chat.first_name}, welcome...\n
-	        click /predict'
-	    );   
-	});
-	state = 0;
-	bot.onText(/\/predict/, (msg) => { 
-	    console.log(msg)
-        bot.sendMessage(
-	        msg.chat.id,
-	        `masukan nilai i|v contohnya 9|9`
-	    );   
-	    state =1;
-	});
+// Bot Setting
+bot.onText(/\/start/, (msg) => { 
+	console.log(msg)
+	bot.sendMessage(
+	    msg.chat.id,
+	    'hello ${msg.chat.first_name}, welcome...\n
+	    click /predict'
+	);   
+});
+
+// input requires i and r
+state = 0;
+bot.onText(/\/predict/, (msg) => { 
+    bot.sendMessage(
+	msg.chat.id,
+	`masukan nilai i|v contohnya 9|9`
+	);   
+	state = 1;
+});
 	
 
-	bot.on('message',(msg)=> {
-	    if(state == 1){
-	        s = msg.text.split("|");
-	        i = s[0]
-	        v = s[1]
-	        model.predict(
+bot.on('message', (msg) => {
+	if(state == 1){
+	    s = msg.text.split("|");
+	    i = s[0]
+	    v = s[1]
+	    model.predict(
 	            [
-	                parseFloat(s[0]),
+	                parseFloat(s[0]), // string to float
 	                parseFloat(s[1])
 	            ]
 	        ).then((jres)=>{
-	            console.log(msg)
                 bot.sendMessage(
 	                msg.chat.id,
 	                `nilai v yang diprediksi adalah ${jres[0]) volt`
