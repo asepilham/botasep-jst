@@ -15,15 +15,15 @@ bot.onText(/\/start/, (msg) => {
     console.log(msg)
     bot.sendMessage(
         msg.chat.id,
-        `hello ${msg.chat.first_name}, welcome...\n
-        click /predict`
+        'hello ${msg.chat.first_name}, welcome...\n
+        click /predict'
     );   
 });
 state = 0;
 bot.onText(/\/predict/, (msg) => { 
     bot.sendMessage(
         msg.chat.id,
-        `masukan nilai i|v contohnya 9|9`
+        'masukan nilai i|v contohnya 9|9'
     );   
     state =1;
 });
@@ -41,11 +41,11 @@ bot.on('message',(msg)=> {
         ).then((jres)=>{
             bot.sendMessage(
                 msg.chat.id,
-                `nilai v yang diprediksi adalah ${jres[0]) volt`
+                'nilai v yang diprediksi adalah ${jres[0]) volt'
             );
             bot.sendMessage(
                 msg.chat.id,
-                `nilai p yang diprediksi adalah ${jres[1]) watt`
+                'nilai p yang diprediksi adalah ${jres[1]) watt'
             );
         })
     }else{
